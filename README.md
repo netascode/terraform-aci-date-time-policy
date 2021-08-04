@@ -1,22 +1,38 @@
 <!-- BEGIN_TF_DOCS -->
-[![Tests](https://github.com/netascode/terraform-aci-scaffolding/actions/workflows/test.yml/badge.svg)](https://github.com/netascode/terraform-aci-scaffolding/actions/workflows/test.yml)
+[![Tests](https://github.com/netascode/terraform-aci-date-time-policy/actions/workflows/test.yml/badge.svg)](https://github.com/netascode/terraform-aci-date-time-policy/actions/workflows/test.yml)
 
-# Terraform ACI Scaffolding Module
+# Terraform ACI Date Time Policy Module
 
-Description
+Manages ACI Date Time Policy
 
 Location in GUI:
-`Tenants` » `XXX`
+`Fabric` » `Fabric Policies` » `Fabric Policies` » `Policies` » `Pod` » `Date and Time`
 
 ## Examples
 
 ```hcl
-module "aci_scaffolding" {
-  source = "netascode/scaffolding/aci"
+module "aci_date_time_policy" {
+  source = "netascode/date-time-policy/aci"
 
-  name        = "ABC"
-  alias       = "ABC-ALIAS"
-  description = "My Description"
+  name                           = "DATE1"
+  apic_ntp_server_master_stratum = 10
+  ntp_admin_state                = false
+  ntp_auth_state                 = true
+  apic_ntp_server_master_mode    = true
+  apic_ntp_server_state          = true
+  ntp_servers = [{
+    hostname_ip   = "100.1.1.1"
+    preferred     = true
+    mgmt_epg      = "inb"
+    mgmt_epg_name = "INB1"
+    auth_key_id   = 1
+  }]
+  ntp_keys = [{
+    id        = 1
+    key       = "SECRETKEY"
+    auth_type = "sha1"
+    trusted   = true
+  }]
 }
 
 ```
@@ -38,20 +54,29 @@ module "aci_scaffolding" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_name"></a> [name](#input\_name) | Tenant name. | `string` | n/a | yes |
-| <a name="input_alias"></a> [alias](#input\_alias) | Tenant alias. | `string` | `""` | no |
-| <a name="input_description"></a> [description](#input\_description) | Tenant description. | `string` | `""` | no |
+| <a name="input_name"></a> [name](#input\_name) | Date time policy Name. | `string` | n/a | yes |
+| <a name="input_apic_ntp_server_master_stratum"></a> [apic\_ntp\_server\_master\_stratum](#input\_apic\_ntp\_server\_master\_stratum) | APIC NTP server master stratum. Minimum value: 1. Maximum value: 14. | `number` | `8` | no |
+| <a name="input_ntp_admin_state"></a> [ntp\_admin\_state](#input\_ntp\_admin\_state) | NTP admin state. | `bool` | `true` | no |
+| <a name="input_ntp_auth_state"></a> [ntp\_auth\_state](#input\_ntp\_auth\_state) | NTP authentication state. | `bool` | `false` | no |
+| <a name="input_apic_ntp_server_master_mode"></a> [apic\_ntp\_server\_master\_mode](#input\_apic\_ntp\_server\_master\_mode) | APIC NTP server master mode. | `bool` | `false` | no |
+| <a name="input_apic_ntp_server_state"></a> [apic\_ntp\_server\_state](#input\_apic\_ntp\_server\_state) | APIC NTP server state. | `bool` | `false` | no |
+| <a name="input_ntp_servers"></a> [ntp\_servers](#input\_ntp\_servers) | List of NTP servers. Default value `preferred`: false. Choices `mgmt_epg`: `inb`, `oob`. Default value `mgmt_epg`: `inb`. Allowed values `auth_key_id`: 1-65535. | <pre>list(object({<br>    hostname_ip   = string<br>    preferred     = optional(bool)<br>    mgmt_epg      = optional(string)<br>    mgmt_epg_name = optional(string)<br>    auth_key_id   = optional(number)<br>  }))</pre> | `[]` | no |
+| <a name="input_ntp_keys"></a> [ntp\_keys](#input\_ntp\_keys) | List of keys. Allowed values `id`: 1-65535. Choices `auth_type`: `md5`, `sha1`. | <pre>list(object({<br>    id        = number<br>    key       = string<br>    auth_type = string<br>    trusted   = bool<br>  }))</pre> | `[]` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| <a name="output_dn"></a> [dn](#output\_dn) | Distinguished name of `fvTenant` object. |
-| <a name="output_name"></a> [name](#output\_name) | Tenant name. |
+| <a name="output_dn"></a> [dn](#output\_dn) | Distinguished name of `datetimePol` object. |
+| <a name="output_name"></a> [name](#output\_name) | Date time policy name. |
 
 ## Resources
 
 | Name | Type |
 |------|------|
-| [aci_rest.fvTenant](https://registry.terraform.io/providers/netascode/aci/latest/docs/resources/rest) | resource |
+| [aci_rest.datetimeNtpAuthKey](https://registry.terraform.io/providers/netascode/aci/latest/docs/resources/rest) | resource |
+| [aci_rest.datetimeNtpProv](https://registry.terraform.io/providers/netascode/aci/latest/docs/resources/rest) | resource |
+| [aci_rest.datetimePol](https://registry.terraform.io/providers/netascode/aci/latest/docs/resources/rest) | resource |
+| [aci_rest.datetimeRsNtpProvToEpg](https://registry.terraform.io/providers/netascode/aci/latest/docs/resources/rest) | resource |
+| [aci_rest.datetimeRsNtpProvToNtpAuthKey](https://registry.terraform.io/providers/netascode/aci/latest/docs/resources/rest) | resource |
 <!-- END_TF_DOCS -->

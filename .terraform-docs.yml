@@ -3,14 +3,14 @@ version: '>= 0.14.0'
 formatter: markdown table
 
 content: |-
-  [![Tests](https://github.com/netascode/terraform-aci-scaffolding/actions/workflows/test.yml/badge.svg)](https://github.com/netascode/terraform-aci-scaffolding/actions/workflows/test.yml)
+  [![Tests](https://github.com/netascode/terraform-aci-date-time-policy/actions/workflows/test.yml/badge.svg)](https://github.com/netascode/terraform-aci-date-time-policy/actions/workflows/test.yml)
 
-  # Terraform ACI Scaffolding Module
+  # Terraform ACI Date Time Policy Module
 
-  Description
+  Manages ACI Date Time Policy
 
   Location in GUI:
-  `Tenants` » `XXX`
+  `Fabric` » `Fabric Policies` » `Fabric Policies` » `Policies` » `Pod` » `Date and Time`
 
   ## Examples
 
