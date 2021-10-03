@@ -13,7 +13,8 @@ Note that this example will create resources. Resources can be destroyed with `t
 
 ```hcl
 module "aci_date_time_policy" {
-  source = "netascode/date-time-policy/aci"
+  source  = "netascode/date-time-policy/aci"
+  version = ">= 0.0.1"
 
   name                           = "DATE1"
   apic_ntp_server_master_stratum = 10
