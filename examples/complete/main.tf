@@ -1,6 +1,6 @@
 module "aci_date_time_policy" {
   source  = "netascode/date-time-policy/aci"
-  version = ">= 0.0.1"
+  version = ">= 0.0.3"
 
   name                           = "DATE1"
   apic_ntp_server_master_stratum = 10
@@ -11,7 +11,7 @@ module "aci_date_time_policy" {
   ntp_servers = [{
     hostname_ip   = "100.1.1.1"
     preferred     = true
-    mgmt_epg      = "inb"
+    mgmt_epg_type = "inb"
     mgmt_epg_name = "INB1"
     auth_key_id   = 1
   }]

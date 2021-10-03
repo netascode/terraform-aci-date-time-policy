@@ -13,7 +13,7 @@ Location in GUI:
 ```hcl
 module "aci_date_time_policy" {
   source  = "netascode/date-time-policy/aci"
-  version = ">= 0.0.1"
+  version = ">= 0.0.3"
 
   name                           = "DATE1"
   apic_ntp_server_master_stratum = 10
@@ -24,7 +24,7 @@ module "aci_date_time_policy" {
   ntp_servers = [{
     hostname_ip   = "100.1.1.1"
     preferred     = true
-    mgmt_epg      = "inb"
+    mgmt_epg_type = "inb"
     mgmt_epg_name = "INB1"
     auth_key_id   = 1
   }]
@@ -61,7 +61,7 @@ module "aci_date_time_policy" {
 | <a name="input_ntp_auth_state"></a> [ntp\_auth\_state](#input\_ntp\_auth\_state) | NTP authentication state. | `bool` | `false` | no |
 | <a name="input_apic_ntp_server_master_mode"></a> [apic\_ntp\_server\_master\_mode](#input\_apic\_ntp\_server\_master\_mode) | APIC NTP server master mode. | `bool` | `false` | no |
 | <a name="input_apic_ntp_server_state"></a> [apic\_ntp\_server\_state](#input\_apic\_ntp\_server\_state) | APIC NTP server state. | `bool` | `false` | no |
-| <a name="input_ntp_servers"></a> [ntp\_servers](#input\_ntp\_servers) | List of NTP servers. Default value `preferred`: false. Choices `mgmt_epg`: `inb`, `oob`. Default value `mgmt_epg`: `inb`. Allowed values `auth_key_id`: 1-65535. | <pre>list(object({<br>    hostname_ip   = string<br>    preferred     = optional(bool)<br>    mgmt_epg      = optional(string)<br>    mgmt_epg_name = optional(string)<br>    auth_key_id   = optional(number)<br>  }))</pre> | `[]` | no |
+| <a name="input_ntp_servers"></a> [ntp\_servers](#input\_ntp\_servers) | List of NTP servers. Default value `preferred`: false. Choices `mgmt_epg_type`: `inb`, `oob`. Default value `mgmt_epg_type`: `inb`. Allowed values `auth_key_id`: 1-65535. | <pre>list(object({<br>    hostname_ip   = string<br>    preferred     = optional(bool)<br>    mgmt_epg_type = optional(string)<br>    mgmt_epg_name = optional(string)<br>    auth_key_id   = optional(number)<br>  }))</pre> | `[]` | no |
 | <a name="input_ntp_keys"></a> [ntp\_keys](#input\_ntp\_keys) | List of keys. Allowed values `id`: 1-65535. Choices `auth_type`: `md5`, `sha1`. | <pre>list(object({<br>    id        = number<br>    key       = string<br>    auth_type = string<br>    trusted   = bool<br>  }))</pre> | `[]` | no |
 
 ## Outputs

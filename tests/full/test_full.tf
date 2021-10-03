@@ -23,7 +23,7 @@ module "main" {
   ntp_servers = [{
     hostname_ip   = "100.1.1.1"
     preferred     = true
-    mgmt_epg      = "inb"
+    mgmt_epg_type = "inb"
     mgmt_epg_name = "INB1"
     auth_key_id   = 1
   }]

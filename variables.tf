@@ -44,11 +44,11 @@ variable "apic_ntp_server_state" {
 }
 
 variable "ntp_servers" {
-  description = "List of NTP servers. Default value `preferred`: false. Choices `mgmt_epg`: `inb`, `oob`. Default value `mgmt_epg`: `inb`. Allowed values `auth_key_id`: 1-65535."
+  description = "List of NTP servers. Default value `preferred`: false. Choices `mgmt_epg_type`: `inb`, `oob`. Default value `mgmt_epg_type`: `inb`. Allowed values `auth_key_id`: 1-65535."
   type = list(object({
     hostname_ip   = string
     preferred     = optional(bool)
-    mgmt_epg      = optional(string)
+    mgmt_epg_type = optional(string)
     mgmt_epg_name = optional(string)
     auth_key_id   = optional(number)
   }))
@@ -56,9 +56,9 @@ variable "ntp_servers" {
 
   validation {
     condition = alltrue([
-      for s in var.ntp_servers : s.mgmt_epg == null || try(contains(["inb", "oob"], s.mgmt_epg), false)
+      for s in var.ntp_servers : s.mgmt_epg_type == null || try(contains(["inb", "oob"], s.mgmt_epg_type), false)
     ])
-    error_message = "`mgmt_epg`: Allowed values are `inb` or `oob`."
+    error_message = "`mgmt_epg_type`: Allowed values are `inb` or `oob`."
   }
 
   validation {

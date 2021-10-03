@@ -22,11 +22,11 @@ resource "aci_rest" "datetimeNtpProv" {
 }
 
 resource "aci_rest" "datetimeRsNtpProvToEpg" {
-  for_each   = { for server in var.ntp_servers : server.hostname_ip => server if server.mgmt_epg != null }
+  for_each   = { for server in var.ntp_servers : server.hostname_ip => server if server.mgmt_epg_name != null }
   dn         = "${aci_rest.datetimeNtpProv[each.value.hostname_ip].id}/rsNtpProvToEpg"
   class_name = "datetimeRsNtpProvToEpg"
   content = {
-    tDn = each.value.mgmt_epg == "oob" ? "uni/tn-mgmt/mgmtp-default/oob-${each.value.mgmt_epg_name}" : "uni/tn-mgmt/mgmtp-default/inb-${each.value.mgmt_epg_name}"
+    tDn = each.value.mgmt_epg_type == "oob" ? "uni/tn-mgmt/mgmtp-default/oob-${each.value.mgmt_epg_name}" : "uni/tn-mgmt/mgmtp-default/inb-${each.value.mgmt_epg_name}"
   }
 }
 
