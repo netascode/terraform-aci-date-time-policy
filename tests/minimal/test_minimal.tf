@@ -5,8 +5,8 @@ terraform {
     }
 
     aci = {
-      source  = "netascode/aci"
-      version = ">=0.2.0"
+      source  = "CiscoDevNet/aci"
+      version = ">=2.0.0"
     }
   }
 }
@@ -17,7 +17,7 @@ module "main" {
   name = "DATE1"
 }
 
-data "aci_rest" "datetimePol" {
+data "aci_rest_managed" "datetimePol" {
   dn = "uni/fabric/time-${module.main.name}"
 
   depends_on = [module.main]
@@ -28,7 +28,7 @@ resource "test_assertions" "datetimePol" {
 
   equal "name" {
     description = "name"
-    got         = data.aci_rest.datetimePol.content.name
+    got         = data.aci_rest_managed.datetimePol.content.name
     want        = module.main.name
   }
 }

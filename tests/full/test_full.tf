@@ -5,8 +5,8 @@ terraform {
     }
 
     aci = {
-      source  = "netascode/aci"
-      version = ">=0.2.0"
+      source  = "CiscoDevNet/aci"
+      version = ">=2.0.0"
     }
   }
 }
@@ -35,7 +35,7 @@ module "main" {
   }]
 }
 
-data "aci_rest" "datetimePol" {
+data "aci_rest_managed" "datetimePol" {
   dn = "uni/fabric/time-${module.main.name}"
 
   depends_on = [module.main]
@@ -46,43 +46,43 @@ resource "test_assertions" "datetimePol" {
 
   equal "name" {
     description = "name"
-    got         = data.aci_rest.datetimePol.content.name
+    got         = data.aci_rest_managed.datetimePol.content.name
     want        = module.main.name
   }
 
   equal "StratumValue" {
     description = "StratumValue"
-    got         = data.aci_rest.datetimePol.content.StratumValue
+    got         = data.aci_rest_managed.datetimePol.content.StratumValue
     want        = "10"
   }
 
   equal "adminSt" {
     description = "adminSt"
-    got         = data.aci_rest.datetimePol.content.adminSt
+    got         = data.aci_rest_managed.datetimePol.content.adminSt
     want        = "disabled"
   }
 
   equal "authSt" {
     description = "authSt"
-    got         = data.aci_rest.datetimePol.content.authSt
+    got         = data.aci_rest_managed.datetimePol.content.authSt
     want        = "enabled"
   }
 
   equal "masterMode" {
     description = "masterMode"
-    got         = data.aci_rest.datetimePol.content.masterMode
+    got         = data.aci_rest_managed.datetimePol.content.masterMode
     want        = "enabled"
   }
 
   equal "serverState" {
     description = "serverState"
-    got         = data.aci_rest.datetimePol.content.serverState
+    got         = data.aci_rest_managed.datetimePol.content.serverState
     want        = "enabled"
   }
 }
 
-data "aci_rest" "datetimeNtpProv" {
-  dn = "${data.aci_rest.datetimePol.id}/ntpprov-100.1.1.1"
+data "aci_rest_managed" "datetimeNtpProv" {
+  dn = "${data.aci_rest_managed.datetimePol.id}/ntpprov-100.1.1.1"
 
   depends_on = [module.main]
 }
@@ -92,19 +92,19 @@ resource "test_assertions" "datetimeNtpProv" {
 
   equal "name" {
     description = "name"
-    got         = data.aci_rest.datetimeNtpProv.content.name
+    got         = data.aci_rest_managed.datetimeNtpProv.content.name
     want        = "100.1.1.1"
   }
 
   equal "preferred" {
     description = "preferred"
-    got         = data.aci_rest.datetimeNtpProv.content.preferred
+    got         = data.aci_rest_managed.datetimeNtpProv.content.preferred
     want        = "yes"
   }
 }
 
-data "aci_rest" "datetimeRsNtpProvToEpg" {
-  dn = "${data.aci_rest.datetimeNtpProv.id}/rsNtpProvToEpg"
+data "aci_rest_managed" "datetimeRsNtpProvToEpg" {
+  dn = "${data.aci_rest_managed.datetimeNtpProv.id}/rsNtpProvToEpg"
 
   depends_on = [module.main]
 }
@@ -114,13 +114,13 @@ resource "test_assertions" "datetimeRsNtpProvToEpg" {
 
   equal "tDn" {
     description = "tDn"
-    got         = data.aci_rest.datetimeRsNtpProvToEpg.content.tDn
+    got         = data.aci_rest_managed.datetimeRsNtpProvToEpg.content.tDn
     want        = "uni/tn-mgmt/mgmtp-default/inb-INB1"
   }
 }
 
-data "aci_rest" "datetimeRsNtpProvToNtpAuthKey" {
-  dn = "${data.aci_rest.datetimeNtpProv.id}/rsntpProvToNtpAuthKey-1"
+data "aci_rest_managed" "datetimeRsNtpProvToNtpAuthKey" {
+  dn = "${data.aci_rest_managed.datetimeNtpProv.id}/rsntpProvToNtpAuthKey-1"
 
   depends_on = [module.main]
 }
@@ -130,13 +130,13 @@ resource "test_assertions" "datetimeRsNtpProvToNtpAuthKey" {
 
   equal "tnDatetimeNtpAuthKeyId" {
     description = "tnDatetimeNtpAuthKeyId"
-    got         = data.aci_rest.datetimeRsNtpProvToNtpAuthKey.content.tnDatetimeNtpAuthKeyId
+    got         = data.aci_rest_managed.datetimeRsNtpProvToNtpAuthKey.content.tnDatetimeNtpAuthKeyId
     want        = "1"
   }
 }
 
-data "aci_rest" "datetimeNtpAuthKey" {
-  dn = "${data.aci_rest.datetimePol.id}/ntpauth-1"
+data "aci_rest_managed" "datetimeNtpAuthKey" {
+  dn = "${data.aci_rest_managed.datetimePol.id}/ntpauth-1"
 
   depends_on = [module.main]
 }
@@ -146,25 +146,25 @@ resource "test_assertions" "datetimeNtpAuthKey" {
 
   equal "id" {
     description = "id"
-    got         = data.aci_rest.datetimeNtpAuthKey.content.id
+    got         = data.aci_rest_managed.datetimeNtpAuthKey.content.id
     want        = "1"
   }
 
   equal "key" {
     description = "key"
-    got         = data.aci_rest.datetimeNtpAuthKey.content.key
+    got         = data.aci_rest_managed.datetimeNtpAuthKey.content.key
     want        = "SECRETKEY"
   }
 
   equal "keyType" {
     description = "keyType"
-    got         = data.aci_rest.datetimeNtpAuthKey.content.keyType
+    got         = data.aci_rest_managed.datetimeNtpAuthKey.content.keyType
     want        = "sha1"
   }
 
   equal "trusted" {
     description = "trusted"
-    got         = data.aci_rest.datetimeNtpAuthKey.content.trusted
+    got         = data.aci_rest_managed.datetimeNtpAuthKey.content.trusted
     want        = "yes"
   }
 }
