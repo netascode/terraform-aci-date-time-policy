@@ -47,8 +47,8 @@ variable "ntp_servers" {
   description = "List of NTP servers. Default value `preferred`: false. Choices `mgmt_epg_type`: `inb`, `oob`. Default value `mgmt_epg_type`: `inb`. Allowed values `auth_key_id`: 1-65535."
   type = list(object({
     hostname_ip   = string
-    preferred     = optional(bool)
-    mgmt_epg_type = optional(string)
+    preferred     = optional(bool, false)
+    mgmt_epg_type = optional(string, "inb")
     mgmt_epg_name = optional(string)
     auth_key_id   = optional(number)
   }))
