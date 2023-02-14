@@ -45,7 +45,7 @@ resource "aci_rest_managed" "datetimeNtpAuthKey" {
   class_name = "datetimeNtpAuthKey"
   content = {
     id      = each.value.id
-    key     = each.value.key
+    key     = sensitive(each.value.key)
     keyType = each.value.auth_type
     trusted = each.value.trusted == true ? "yes" : "no"
   }
