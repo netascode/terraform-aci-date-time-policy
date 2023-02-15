@@ -1,3 +1,7 @@
+## 0.2.1 (unreleased)
+
+- Make the NTP `key` variable sensitive
+
 ## 0.2.0
 
 - Update to support new Terraform 1.3 `optional` syntax
