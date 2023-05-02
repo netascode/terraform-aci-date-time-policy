@@ -1,3 +1,7 @@
+## 0.2.2 (unreleased)
+
+- Restore idempotency with ACI 6.0
+
 ## 0.2.1
 
 - Make the NTP `key` variable sensitive

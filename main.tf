@@ -49,4 +49,8 @@ resource "aci_rest_managed" "datetimeNtpAuthKey" {
     keyType = each.value.auth_type
     trusted = each.value.trusted == true ? "yes" : "no"
   }
+
+  lifecycle {
+    ignore_changes = [content["key"]]
+  }
 }
