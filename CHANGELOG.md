@@ -1,4 +1,4 @@
-## 0.2.2 (unreleased)
+## 0.2.2
 
 - Restore idempotency with ACI 6.0
 
