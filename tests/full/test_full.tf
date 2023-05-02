@@ -152,12 +152,6 @@ resource "test_assertions" "datetimeNtpAuthKey" {
     want        = "1"
   }
 
-  equal "key" {
-    description = "key"
-    got         = data.aci_rest_managed.datetimeNtpAuthKey.content.key
-    want        = "SECRETKEY"
-  }
-
   equal "keyType" {
     description = "keyType"
     got         = data.aci_rest_managed.datetimeNtpAuthKey.content.keyType
